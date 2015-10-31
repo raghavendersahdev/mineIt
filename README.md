@@ -1,1 +1,3 @@
 # mineIt
+z
+s
