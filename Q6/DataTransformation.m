@@ -1,7 +1,7 @@
 % Load the file
 sizeOfData = 30000;
 filename = 'risk-train.txt';
-
+current_date = '10/30/2015';
 disp('Loading file...');
 s = tdfread(filename,'\t');
 
@@ -14,15 +14,32 @@ valMin = min(s.VALUE_ORDER_PRE);
 valMax = max(s.VALUE_ORDER_PRE);
 s.VALUE_ORDER_PRE = (s.VALUE_ORDER_PRE-valMin)/(valMax-valMin);
 
-%% Update DATE_LORDER
-disp('Updating DATE_LORDERValues')
+%% Create IS_LORDER Attribute
+disp ('Creating IS_LORDER to see if a previous order has been placed.')
+s.IS_LORDER = s.B_TELEFON;
 for i = 1:sizeOfData
     if (strcmp(s.DATE_LORDER(i),'?') == 1) 
-        s.DATE_LORDER(i,:) = 'no        ';
+        s.IS_LORDER(i,:) = 'no ';
     else
-        s.DATE_LORDER(i,:) = 'yes       ';
+        s.IS_LORDER(i,:) = 'yes';
     end     
 end
+
+
+%% Update DATE_LORDER to Numeric
+disp('Updating DATE_LORDER Values to Numeric')
+temp_date = zeros(sizeOfData,1);
+infinite_date = '10/30/1700';
+for i = 1:sizeOfData
+    if (strcmp(s.DATE_LORDER(i),'?') == 1) 
+        s.DATE_LORDER(i,:) = infinite_date;
+    end
+    temp = s.DATE_LORDER(i,:);
+    temp_date(i) = daysact(temp,current_date);
+end
+temp_date = floor(temp_date/365);
+s.DATE_LORDER = temp_date;
+
 
 %% Update all the ordered items (ANUMBER_01...10) that have '?' to '0'
 disp ('Updating all ordered items (ANUMBER_01..10) that are missing to 0')
@@ -82,7 +99,6 @@ end
 
 %% Add the Age
 disp('Get the birthdate to convert to an age')
-current_date = '10/30/2015';
 temp_age = zeros(sizeOfData,1);
 for i=1:sizeOfData
     if (strcmp(s.B_BIRTHDATE(i),'?') == 1) 
@@ -135,13 +151,13 @@ s = rmfield (s,'Z_CARD_VALID');
 
 %% Update Field References
 disp ('Update Data set references')
-s.TIME_ORDER = s.TIME_ORDER_NUMERIC
+s.TIME_ORDER = s.TIME_ORDER_NUMERIC;
 s = rmfield(s,'TIME_ORDER_NUMERIC');
 
 
 %% Save back into the file
 disp('Saving')
-filenameOutput = 'risk-train-DATE_LORDER_Binary.txt';
+filenameOutput = 'risk-train-modified.txt';
 tdfwrite(filenameOutput,s)
 
 %% Completed Message
