@@ -46,52 +46,52 @@ disp ('Updating all ordered items (ANUMBER_01..10) that are missing to 0')
 number_of_items = zeros(sizeOfData,1);
 for i = 1:sizeOfData
    if (strcmp(s.ANUMMER_01(i),'?') == 1)
-       s.ANUMMER_01(i) = '0';
+       s.ANUMMER_01(i) = '?';
    else
        number_of_items(i) = 1;
    end
      if (strcmp(s.ANUMMER_02(i),'?') == 1)
-       s.ANUMMER_02(i) = '0';
+       s.ANUMMER_02(i) = '?';
      else
        number_of_items(i) = 2;
      end
      if (strcmp(s.ANUMMER_03(i),'?') == 1)
-       s.ANUMMER_03(i) = '0';
+       s.ANUMMER_03(i) = '?';
      else
        number_of_items(i) = 3;
      end
      if (strcmp(s.ANUMMER_04(i),'?') == 1)
-       s.ANUMMER_04(i) = '0';
+       s.ANUMMER_04(i) = '?';
      else
        number_of_items(i) = 4;
      end
      if (strcmp(s.ANUMMER_05(i),'?') == 1)
-       s.ANUMMER_05(i) = '0';
+       s.ANUMMER_05(i) = '?';
      else
        number_of_items(i) = 5;
      end
      if (strcmp(s.ANUMMER_06(i),'?') == 1)
-       s.ANUMMER_06(i) = '0';
+       s.ANUMMER_06(i) = '?';
      else
        number_of_items(i) = 6;
      end
      if (strcmp(s.ANUMMER_07(i),'?') == 1)
-       s.ANUMMER_07(i) = '0';
+       s.ANUMMER_07(i) = '?';
      else
        number_of_items(i) = 7;
      end
      if (strcmp(s.ANUMMER_08(i),'?') == 1)
-       s.ANUMMER_08(i) = '0';
+       s.ANUMMER_08(i) = '?';
      else
        number_of_items(i) = 8;
      end
      if (strcmp(s.ANUMMER_09(i),'?') == 1)
-       s.ANUMMER_09(i) = '0';
+       s.ANUMMER_09(i) = '?';
      else
        number_of_items(i) = 9;
      end
      if (strcmp(s.ANUMMER_10(i),'?') == 1)
-       s.ANUMMER_10(i) = '0';
+       s.ANUMMER_10(i) = '?';
      else
        number_of_items(i) = 10;
      end
@@ -114,7 +114,7 @@ s.AGE = temp_age;
 disp ('Update Current Stage of Reminder')
 for i = 1:sizeOfData
     if (strcmp(s.MAHN_HOECHST,'?'))
-        s.MAHN_HOECHST = '0';
+        s.MAHN_HOECHST = '?';
     end
 end
 
@@ -145,6 +145,8 @@ end
 %% Remove redundant Data
 disp('Remove Redudant Data');
 s = rmfield(s,'B_BIRTHDATE');
+s.B_BIRTHDATE = s.AGE;
+s = rmfield(s,'AGE');
 s = rmfield(s,'TIME_ORDER');
 s = rmfield(s,'ANUMMER_10'); % This has no information
 s = rmfield (s,'Z_CARD_VALID');
@@ -157,8 +159,6 @@ s = rmfield(s,'TIME_ORDER_NUMERIC');
 
 %% Save back into the file
 disp('Saving')
-filenameOutput = 'risk-train-modified.txt';
+filenameOutput = 'risk-train-modified_10.txt';
 tdfwrite(filenameOutput,s)
-
-%% Completed Message
 disp ('Successfully Finished!')
