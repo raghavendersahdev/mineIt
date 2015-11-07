@@ -56,6 +56,7 @@ t6 = s.ANUMMER_06;
 t7 = s.ANUMMER_07;
 t8 = s.ANUMMER_08;
 t9 = s.ANUMMER_09;
+a = unique(sort(t1));
 s.ANUMMER_01 = s.B_BIRTHDATE;
 s.ANUMMER_02 = s.B_BIRTHDATE;
 s.ANUMMER_03 = s.B_BIRTHDATE;
@@ -69,47 +70,47 @@ for i = 1:sizeOfData
    if (strcmp(t1(i),'?') == 1)
        s.ANUMMER_01(i) = '?         ';
    else
-       s.ANUMMER_01(i,:) = [num2str(t1(i,:)),'    '];
+       s.ANUMMER_01(i,:) = [normAttribute(t1(i,:),a,1),'    '];
    end
      if (strcmp(t2(i),'?') == 1)
        s.ANUMMER_02(i,:) = '?         ';
         else
-       s.ANUMMER_02(i,:) = [num2str(t2(i,:)),'    '];
+       s.ANUMMER_02(i,:) = [normAttribute(t2(i,:),a,0),'    '];
    end
      if (strcmp(t3(i),'?') == 1)
        s.ANUMMER_03(i,:) = '?         ';
         else
-       s.ANUMMER_03(i,:) = [num2str(t3(i,:)),'    '];
+       s.ANUMMER_03(i,:) = [normAttribute(t3(i,:),a,0),'    '];
    end
      if (strcmp(t4(i),'?') == 1)
        s.ANUMMER_04(i,:) = '?         ';
         else
-       s.ANUMMER_04(i,:) = [num2str(t4(i,:)),'    '];
+       s.ANUMMER_04(i,:) = [normAttribute(t4(i,:),a,0),'    '];
    end
      if (strcmp(t5(i),'?') == 1)
        s.ANUMMER_05(i,:) = '?         ';
         else
-       s.ANUMMER_05(i,:) = [num2str(t5(i,:)),'    '];
+       s.ANUMMER_05(i,:) = [normAttribute(t5(i,:),a,0),'    '];
    end
      if (strcmp(t6(i),'?') == 1)
        s.ANUMMER_06(i,:) = '?         ';
         else
-       s.ANUMMER_06(i,:) = [num2str(t6(i,:)),'    '];
+       s.ANUMMER_06(i,:) = [normAttribute(t6(i,:),a,0),'    '];
    end
      if (strcmp(t7(i),'?') == 1)
        s.ANUMMER_07(i,:) = '?         ';
         else
-       s.ANUMMER_07(i,:) = [num2str(t7(i,:)),'    '];
+       s.ANUMMER_07(i,:) = [normAttribute(t7(i,:),a,0),'    '];
    end
      if (strcmp(t8(i),'?') == 1)
        s.ANUMMER_08(i,:) = '?         ';
         else
-       s.ANUMMER_08(i,:) = [num2str(t8(i,:)),'    '];
+       s.ANUMMER_08(i,:) = [normAttribute(t8(i,:),a,0),'    '];
    end
      if (strcmp(t9(i),'?') == 1)
        s.ANUMMER_09(i,:) = '?         ';
         else
-       s.ANUMMER_09(i,:) = [num2str(t9(i,:)),'    '];
+       s.ANUMMER_09(i,:) = [normAttribute(t9(i,:),a,0),'    '];
    end
 end
 
